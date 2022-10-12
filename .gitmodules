@@ -1,0 +1,3 @@
+[submodule "odig-homeeToMqtt"]
+	path = odig-homeeToMqtt
+	url = https://github.com/odig/homeeToMqtt.git
