@@ -1,0 +1,21 @@
+{
+  "homeeUserName": "mqtt",
+  "homeePassword": "overfeed-hide-elevator-bulldog",
+  "homeeServer": "homee",
+  "mqttUserName": "homee",
+  "mqttPassword": "wagon-superjet-colonist-shaky",
+  "mqttServer": "diskstation",
+  "publish": true,
+  "publishHuman": true,
+  "publishInt": false,
+  "publishBool": true,
+  "subscribe": true,
+  "subscribeHuman": true,
+  "identifier": "devices/status/",
+  "identifierHuman": "human/",
+  "identifierInt": "devices/int/",
+  "identifierBool": "devices/bool/",
+  "filterEchoedMQTTMessages": false,
+  "homeeStatusRepeat": true,
+  "statusTimer": 180
+}

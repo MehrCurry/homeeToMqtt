@@ -23,9 +23,9 @@
 }
 */
 
-const fs = require('fs')
+import fs from 'fs'
 // Start Winston Logger
-const winston = require('winston');
+import winston from 'winston';
 const env = process.env.NODE_ENV || 'info';
 const logDir = 'log';
 // Create the log directory if it does not exist
@@ -49,7 +49,7 @@ const logger = new (winston.Logger)({
         })
     ]
 });
-
+logger.debug("Logger created")
 // config
 let config
 let path
@@ -94,12 +94,12 @@ logger.info('Using config ' + path)
 logger.info(JSON.stringify(config, null, 4))
 
 //libs
-const fetch = require('node-fetch')
-const WebSocket = require('ws')
-const querystring = require('querystring')
-const homee = require('./lib/homee.js')
-const sha512 = require('js-sha512')
-const mqtt = require('mqtt')
+import fetch from 'node-fetch';
+import WebSocket from 'ws'
+import querystring from 'querystring'
+import homee from './lib/homee.js'
+import sha512 from 'js-sha512'
+import mqtt from 'mqtt'
 
 //const
 //const token_expires = 0
@@ -120,13 +120,13 @@ let nodes = []
 global.Buffer = global.Buffer || require('buffer').Buffer
 if (typeof btoa === 'undefined') {
     global.btoa = function (str) {
-        return new Buffer(str).toString('base64')
+        return Buffer.from(str).toString('base64')
     }
 }
 
 if (typeof atob === 'undefined') {
     global.atob = function (b64Encoded) {
-        return new Buffer(b64Encoded, 'base64').toString()
+        return Buffer.from(b64Encoded, 'base64').toString()
     }
 }
 
@@ -355,7 +355,7 @@ function homeeConnect() {
             return encodeURIComponent(key) + '=' + encodeURIComponent(data[key])
         })
         .join('&')
-    //console.log('data: ' + urlData)
+    logger.debug('data: ' + urlData)
 
     let url = 'http://' + config.homeeServer + ':7681/access_token'
     //console.log('url: ' + url)
@@ -369,7 +369,7 @@ function homeeConnect() {
             return response.text()
         })
         .then(function (data) {
-            //console.log(data)
+            logger.debug(data)
             let token = data.match(/access_token=([^&]*)/)
             //console.log('token=' + token[1])
             let connection = 'ws://' + config.homeeServer + ':7681/connection?access_token=' + token[1]
@@ -511,11 +511,9 @@ function mqttConnect() {
     }
 
     mqttConnection.on('connect', function () {
-        logger.info("mqtt available")
+        logger.debug('Connected to mqtt broker')
         mqttAvailable = true
-        if (homeeAvailable === false && !terminating) {
             homeeConnect()
-        }
     })
     mqttConnection.on('message', function (topic, message) {
         logger.info("mqtt message received:", topic, message.toString())
