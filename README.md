@@ -19,5 +19,5 @@ docker build -f Dockerfile -t $USER/homeetomqtt odig-homeeToMqtt
 
 ## Running the container
 
-docker run -d -v config.json:/app/config.jsom gzockoll/homeetomqtt
+docker run -d -v config.json:/app/config.json gzockoll/homeetomqtt
 
